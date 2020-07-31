@@ -1,7 +1,5 @@
 #!groovy
 
-@Library('slackNotifications-shared-library@master') _
-
 pipeline {
     agent any
     tools {
