@@ -3,10 +3,9 @@
 pipeline {
     agent any
     tools {
-        maven 'M2'
-        jdk 'JDK'
-        nodejs 'NODEJS'
-    }
+        maven "MAVEN_HOME"
+        jdk "JAVA_HOME"
+           }
 
     environment {
         //getting the current stable/deployed revision...this is used in undeloy.sh in case of failure...
