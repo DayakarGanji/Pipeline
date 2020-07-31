@@ -2,10 +2,7 @@
 
 pipeline {
     agent any
-    tools {
-        maven "MAVEN_HOME"
-        jdk "JAVA_HOME"
-           }
+    tool name: 'maven', type: 'maven'
 
     environment {
         //getting the current stable/deployed revision...this is used in undeloy.sh in case of failure...
