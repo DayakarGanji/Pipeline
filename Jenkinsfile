@@ -3,7 +3,7 @@
 pipeline {
     agent any
     tool name: 'maven', type: 'maven'
-
+}
     environment {
         //getting the current stable/deployed revision...this is used in undeloy.sh in case of failure...
         stable_revision = sh(script: 'curl -H "Authorization: Basic $base64encoded" "https://api.enterprise.apigee.com/v1/organizations/dayakarg-eval/apis/HelloWorld-2/deployments" | jq -r ".environment[0].revision[0].name"', returnStdout: true).trim()
