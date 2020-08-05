@@ -5,7 +5,8 @@ pipeline {
     tools {
         maven 'maven'
         jdk 'JDK8'
-
+    }
+    
     stages {
         stage('Initial-Checks') {
             steps {
