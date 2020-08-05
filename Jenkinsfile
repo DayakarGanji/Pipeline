@@ -1,9 +1,14 @@
 #!groovy
 
 pipeline {
-        agent any
+    agent any
+    tools {
+        maven 'Maven'
+        jdk 'Java'
         
-        environment {
+    }
+
+    environment {
         //getting the current stable/deployed revision...this is used in undeloy.sh in case of failure...
         stable_revision = sh(script: 'curl -H "Authorization: Basic $base64encoded" "https://api.enterprise.apigee.com/v1/organizations/dayakarg-eval/apis/HelloWorld-2/deployments" | jq -r ".environment[0].revision[0].name"', returnStdout: true).trim()
     }
@@ -11,18 +16,34 @@ pipeline {
     stages {
         stage('Initial-Checks') {
             steps {
-                bat "npm -v"
-                bat "mvn -v"
+                sh "npm -v"
+                sh "mvn -v"
                 echo "$apigeeUsername"
                 echo "Stable Revision: ${env.stable_revision}"
         }}  
         stage('Policy-Code Analysis') {
             steps {
-                bat "npm install -g apigeelint"
-                bat "apigeelint -s HelloWorld-2/apiproxy/ -f codeframe.js"
+                sh "npm install -g apigeelint"
+                sh "apigeelint -s HelloWorld-2/apiproxy/ -f codeframe.js"
             }
         }
-                /*stage('Promotion') {
+        stage('Unit-Test-With-Coverage') {
+            steps {
+                script {
+                    try {
+                        sh "npm install"
+                        sh "npm test test/unit/*.js"
+                        sh "npm run coverage test/unit/*.js"
+                    } catch (e) {
+                        throw e
+                    } finally {
+                        bat "cd coverage && cp cobertura-coverage.xml $WORKSPACE"
+                        step([$class: 'CoberturaPublisher', coberturaReportFile: 'cobertura-coverage.xml'])
+                    }
+                }
+            }
+        }
+        /*stage('Promotion') {
             steps {
                 timeout(time: 2, unit: 'DAYS') {
                     input 'Do you want to Approve?'
@@ -33,13 +54,35 @@ pipeline {
             steps {
                  //deploy using maven plugin
                  
-                 // deploy only proxy and deploy both proxy and config based on edge.js update
+                 // deploy only proxy and deploy both proxy and 	config based on edge.js update
                 //	bat "sh && sh deploy.sh"
-                bat "mvn -f HelloWorld-2/pom.xml install -Pprod -Dusername=${apigeeUsername} -Dpassword=${apigeePassword} -Dapigee.config.options=update"
+                sh "mvn -f HR-API/pom.xml install -Pprod -Dusername=${apigeeUsername} -Dpassword=${apigeePassword} -Dapigee.config.options=update"
             }
         }
-        
+        stage('Integration Tests') {
+            steps {
+                script {
+                    try {
+                        // using credentials.sh to get the client_id and secret of the app..
+                        // thought of using them in cucumber oauth feature
+                        // bat "sh && sh credentials.sh"
+                        sh "cd $WORKSPACE/test/integration && npm install"
+                        sh "cd $WORKSPACE/test/integration && npm test"
+                    } catch (e) {
+                        //if tests fail, I have used an shell script which has 3 APIs to undeploy, delete current revision & deploy previous stable revision
+                        sh "sh && sh undeploy.sh"
+                        throw e
+                    } finally {
+                        // generate cucumber reports in both Test Pass/Fail scenario
+                        sh "cd $WORKSPACE/test/integration && cp reports.json $WORKSPACE"
+                        cucumber fileIncludePattern: 'reports.json'
+                        build job: 'cucumber-report'
+                    }
+                }
+            }
+        }
     }
+}
 
 /*
 
@@ -49,4 +92,3 @@ using build job to call a Freestyle project which sends the Cucumber reports to 
     currently the cucumberSlackSend channel: 'apigee-cicd', json: '$WORKSPACE/reports.json' 
         option doesnt send the reports to Slack
 */
-}
