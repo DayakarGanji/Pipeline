@@ -34,4 +34,8 @@
     "fs-extra": "^7",
     "argv": "^0"
   }
-}
+   "repository" : {     
+     "type" : "git",
+      "url" : "http://github.com/npm/express.git" 
+   }
+  }
