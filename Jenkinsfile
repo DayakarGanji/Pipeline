@@ -12,8 +12,7 @@ pipeline {
             steps {
                 sh "npm -v"
                 sh "mvn -v"
-                echo "$apigeeUsername"
-                
+                                
         }}  
         stage('Policy-Code Analysis') {
             steps {
