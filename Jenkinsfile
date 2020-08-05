@@ -14,12 +14,7 @@ pipeline {
                 sh "mvn -v"
                                 
         }}  
-        stage('Policy-Code Analysis') {
-            steps {
-                sh "sudo npm install -g apigeelint"
-                sh "apigeelint -s HelloWorld/apiproxy/ -f codeframe.js"
-            }
-        }
+                }
         stage('Unit-Test-With-Coverage') {
             steps {
                 script {
