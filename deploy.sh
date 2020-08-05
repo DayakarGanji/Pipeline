@@ -18,4 +18,4 @@ fi
 # Redirect output from this script to an "edge.properties" file in Jenkins. 
 echo EdgeConfigOptions=$EdgeConfigOptions
 
-mvn -f HelloWorld-2/pom.xml install -Ptest -Dusername=${apigeeUsername} -Dpassword=${apigeePassword} -Dapigee.config.options=$EdgeConfigOptions
+mvn -f HelloWorld/pom.xml install -Ptest -Dusername=${apigeeUsername} -Dpassword=${apigeePassword} -Dapigee.config.options=$EdgeConfigOptions

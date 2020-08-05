@@ -63,7 +63,7 @@
                     "test"
                 ],
                 "proxies": [
-                    "HelloWorld-2",
+                    "HelloWorld",
                 ],
                 "quota": "100000000",
                 "quotaInterval": "1",

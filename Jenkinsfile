@@ -10,7 +10,7 @@ pipeline {
 
     environment {
         //getting the current stable/deployed revision...this is used in undeloy.sh in case of failure...
-        stable_revision = sh(script: 'curl -H "Authorization: Basic $base64encoded" "https://api.enterprise.apigee.com/v1/organizations/dayakarg-eval/apis/HelloWorld-2/deployments" | jq -r ".environment[0].revision[0].name"', returnStdout: true).trim()
+        stable_revision = sh(script: 'curl -H "Authorization: Basic $base64encoded" "https://api.enterprise.apigee.com/v1/organizations/dayakarg-eval/apis/HelloWorld/deployments" | jq -r ".environment[0].revision[0].name"', returnStdout: true).trim()
     }
 
     stages {
@@ -24,7 +24,7 @@ pipeline {
         stage('Policy-Code Analysis') {
             steps {
                 sh "npm install -g apigeelint"
-                sh "apigeelint -s HelloWorld-2/apiproxy/ -f codeframe.js"
+                sh "apigeelint -s HelloWorld/apiproxy/ -f codeframe.js"
             }
         }
         stage('Unit-Test-With-Coverage') {
@@ -56,7 +56,7 @@ pipeline {
                  
                  // deploy only proxy and deploy both proxy and 	config based on edge.js update
                 //	bat "sh && sh deploy.sh"
-                sh "mvn -f HR-API/pom.xml install -Pprod -Dusername=${apigeeUsername} -Dpassword=${apigeePassword} -Dapigee.config.options=update"
+                sh "mvn -f HelloWorld/pom.xml install -Pprod -Dusername=${apigeeUsername} -Dpassword=${apigeePassword} -Dapigee.config.options=update"
             }
         }
         stage('Integration Tests') {
