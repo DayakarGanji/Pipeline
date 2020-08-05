@@ -16,7 +16,7 @@ pipeline {
         }}  
         stage('Policy-Code Analysis') {
             steps {
-                sh "npm install -g apigeelint"
+                sh "sudo npm install -g apigeelint"
                 sh "apigeelint -s HelloWorld/apiproxy/ -f codeframe.js"
             }
         }
@@ -24,7 +24,7 @@ pipeline {
             steps {
                 script {
                     try {
-                        sh "npm install"
+                        sh " sudo npm install"
                         sh "npm test test/unit/*.js"
                         sh "npm run coverage test/unit/*.js"
                     } catch (e) {
