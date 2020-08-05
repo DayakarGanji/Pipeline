@@ -14,8 +14,7 @@ pipeline {
                 sh "mvn -v"
                                 
         }}  
-                }
-        stage('Unit-Test-With-Coverage') {
+            stage('Unit-Test-With-Coverage') {
             steps {
                 script {
                     try {
