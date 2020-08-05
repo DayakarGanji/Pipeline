@@ -18,8 +18,7 @@ pipeline {
             steps {
                 script {
                     try {
-                        sh "npm test"
-                        sh "mocha ./test/unit/*.js"
+                        sh "npm test /test/unit/*.js"
                         sh "npm run coverage test/unit/*.js"
                     } catch (e) {
                         throw e
