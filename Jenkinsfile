@@ -23,7 +23,7 @@ pipeline {
                     } catch (e) {
                         throw e
                     } finally {
-                        bat "cd coverage && cp cobertura-coverage.xml $WORKSPACE"
+                        sh "cd coverage && cp cobertura-coverage.xml $WORKSPACE"
                         step([$class: 'CoberturaPublisher', coberturaReportFile: 'cobertura-coverage.xml'])
                     }
                 }
