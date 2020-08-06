@@ -23,7 +23,7 @@ pipeline {
         stage('Policy-Code Analysis') {
             steps {
                 sh "sudo npm install -g apigeelint"
-                sh "apigeelint -s HelloWorld/apiproxy/ -f codeframe.js"
+                sh "sudo apigeelint -s HelloWorld/apiproxy/ -f codeframe.js"
             }
         }
         stage('Unit-Test-With-Coverage') {
