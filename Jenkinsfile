@@ -22,8 +22,8 @@ pipeline {
         }}  
         stage('Policy-Code Analysis') {
             steps {
-                bat "sudo npm install -g apigeelint"
-                bat "sudo apigeelint -s HelloWorld/apiproxy/ -f codeframe.js"
+                bat "npm install -g apigeelint"
+                bat "apigeelint -s HelloWorld/apiproxy/ -f codeframe.js"
             }
         }
         stage('Unit-Test-With-Coverage') {
