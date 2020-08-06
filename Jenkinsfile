@@ -81,14 +81,7 @@ pipeline {
             }
         }
     }
-
-    post {
-        always {
-            // cucumberSlackSend channel: 'apigee-cicd', json: '$WORKSPACE/reports.json'
-            sendNotifications currentBuild.result
-        }
     }
-}
 
 /*
 
