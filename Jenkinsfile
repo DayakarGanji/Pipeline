@@ -5,8 +5,7 @@ pipeline {
     tools {
         maven 'maven'
         jdk 'JDK8'
-        nodejs 'NODEJS'
-    }
+        }
 
     environment {
         //getting the current stable/deployed revision...this is used in undeloy.sh in case of failure...
