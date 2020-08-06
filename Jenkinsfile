@@ -5,19 +5,33 @@ pipeline {
     tools {
         maven 'maven'
         jdk 'JDK8'
+        nodejs 'NODEJS'
     }
-    
+
+    environment {
+        //getting the current stable/deployed revision...this is used in undeloy.sh in case of failure...
+        stable_revision = sh(script: 'curl -H "Authorization: Basic $base64encoded" "https://api.enterprise.apigee.com/v1/organizations/dayakarg-eval/apis/HelloWorld/deployments" | jq -r '".environment[0].revision[0].name"'', returnStdout: true).trim()
+    }
+
     stages {
         stage('Initial-Checks') {
             steps {
                 sh "npm -v"
                 sh "mvn -v"
-                                
+                //echo "$apigeeUsername"
+                echo "Stable Revision: ${env.stable_revision}"
         }}  
-            stage('Unit-Test-With-Coverage') {
+        stage('Policy-Code Analysis') {
+            steps {
+                sh "npm install -g apigeelint"
+                sh "apigeelint -s HelloWorld/apiproxy/ -f codeframe.js"
+            }
+        }
+        stage('Unit-Test-With-Coverage') {
             steps {
                 script {
                     try {
+                        sh "npm install"
                         sh "npm test test/unit/*.js"
                         sh "npm run coverage test/unit/*.js"
                     } catch (e) {
@@ -66,6 +80,13 @@ pipeline {
                     }
                 }
             }
+        }
+    }
+
+    post {
+        always {
+            // cucumberSlackSend channel: 'apigee-cicd', json: '$WORKSPACE/reports.json'
+            sendNotifications currentBuild.result
         }
     }
 }
