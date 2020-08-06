@@ -30,7 +30,7 @@ pipeline {
             steps {
                 script {
                     try {
-                        sh "sudo npm install"
+                       // sh "npm install"
                         sh "npm test test/unit/*.js"
                         sh "npm run coverage test/unit/*.js"
                     } catch (e) {
