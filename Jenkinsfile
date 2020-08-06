@@ -3,8 +3,8 @@
 pipeline {
     agent any
     tools {
-        maven 'maven'
-        jdk 'JDK8'
+        maven 'maven3.3.9'
+        jdk 'Java'
         }
 
     environment {
@@ -15,29 +15,29 @@ pipeline {
     stages {
         stage('Initial-Checks') {
             steps {
-                sh "npm -v"
-                sh "mvn -v"
+                bat "npm -v"
+                bat "mvn -v"
                 //echo "$apigeeUsername"
                 echo "Stable Revision: ${env.stable_revision}"
         }}  
         stage('Policy-Code Analysis') {
             steps {
-                sh "sudo npm install -g apigeelint"
-                sh "sudo apigeelint -s HelloWorld/apiproxy/ -f codeframe.js"
+                bat "sudo npm install -g apigeelint"
+                bat "sudo apigeelint -s HelloWorld/apiproxy/ -f codeframe.js"
             }
         }
         stage('Unit-Test-With-Coverage') {
             steps {
                 script {
                     try {
-                       // sh "npm install"
-                        sh "npm test test/unit/*.js"
-                        sh "npm run coverage test/unit/*.js"
+                        bat "npm install"
+                        bat "npm test test/unit/*.js"
+                        bat "npm run coverage test/unit/*.js"
                     } catch (e) {
                         throw e
                     } finally {
-                        sh "cd coverage && cp cobertura-coverage.xml $WORKSPACE"
-                        step([$class: 'CoberturaPublisher', coberturaReportFile: 'cobertura-coverage.xml'])
+                        bat "cd coverage && cp cobertura-coverage.xml $WORKSPACE"
+                        bat([$class: 'CoberturaPublisher', coberturaReportFile: 'cobertura-coverage.xml'])
                     }
                 }
             }
@@ -55,7 +55,7 @@ pipeline {
                  
                  // deploy only proxy and deploy both proxy and 	config based on edge.js update
                 //	bat "sh && sh deploy.sh"
-                sh "mvn -f HelloWorld/pom.xml install -Pprod -Dusername=${apigeeUsername} -Dpassword=${apigeePassword} -Dapigee.config.options=update"
+                bat "mvn -f HelloWorld/pom.xml install -Pprod -Dusername=${apigeeUsername} -Dpassword=${apigeePassword} -Dapigee.config.options=update"
             }
         }
         stage('Integration Tests') {
@@ -65,15 +65,15 @@ pipeline {
                         // using credentials.sh to get the client_id and secret of the app..
                         // thought of using them in cucumber oauth feature
                         // bat "sh && sh credentials.sh"
-                        sh "cd $WORKSPACE/test/integration && npm install"
-                        sh "cd $WORKSPACE/test/integration && npm test"
+                        bat "cd $WORKSPACE/test/integration && npm install"
+                        bat "cd $WORKSPACE/test/integration && npm test"
                     } catch (e) {
                         //if tests fail, I have used an shell script which has 3 APIs to undeploy, delete current revision & deploy previous stable revision
-                        sh "sh && sh undeploy.sh"
+                        bat "sh && sh undeploy.sh"
                         throw e
                     } finally {
                         // generate cucumber reports in both Test Pass/Fail scenario
-                        sh "cd $WORKSPACE/test/integration && cp reports.json $WORKSPACE"
+                        bat "cd $WORKSPACE/test/integration && cp reports.json $WORKSPACE"
                         cucumber fileIncludePattern: 'reports.json'
                         build job: 'cucumber-report'
                     }
