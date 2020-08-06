@@ -9,7 +9,7 @@ pipeline {
 
     environment {
         //getting the current stable/deployed revision...this is used in undeloy.sh in case of failure...
-        stable_revision = sh(script: 'curl -H --ssl-no-revoke -x "Authorization: Basic ZGF5YWthci5nQGhjbC5jb206TmV2ZXI0Z3QwMSE=" "https://api.enterprise.apigee.com/v1/organizations/dayakarg-eval/apis/HelloWorld/deployments" | jq -r ".environment[0].revision[0].name"', returnStdout: true).trim()
+        stable_revision = sh(script: 'curl -H "Authorization: Basic ZGF5YWthci5nQGhjbC5jb206TmV2ZXI0Z3QwMSE=" "https://api.enterprise.apigee.com/v1/organizations/dayakarg-eval/apis/HelloWorld/deployments" --ssl-no-revoke -x  | jq -r ".environment[0].revision[0].name"', returnStdout: true).trim()
     }
 
     stages {
