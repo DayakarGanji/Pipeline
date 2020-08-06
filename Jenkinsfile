@@ -22,7 +22,7 @@ pipeline {
         }}  
         stage('Policy-Code Analysis') {
             steps {
-                bat "npm install -g apigeelint"
+               // bat "npm install -g apigeelint"
                 bat "apigeelint -s HelloWorld/apiproxy/ -f codeframe.js"
             }
         }
@@ -30,7 +30,7 @@ pipeline {
             steps {
                 script {
                     try {
-                        bat "npm install"
+                        // bat "npm install"
                         bat "npm test test/unit/*.js"
                         bat "npm run coverage test/unit/*.js"
                     } catch (e) {
