@@ -25,7 +25,7 @@ var requestConstructor;
 beforeEach(function () {
 	contextGetVariableMethod = sinon.stub(context, 'getVariable');
 	contextSetVariableMethod = sinon.stub(context, 'setVariable');
-	requestConstructor = sinon.spy(GLOBAL, 'Request');
+	requestConstructor = sinon.spy(global, 'Request');
 	httpClientSendMethod = sinon.stub(httpClient, 'send');
 });
 
@@ -60,8 +60,8 @@ describe('feature: user account creation', function() {
 		expect(requestConstructorArgs[2]['Content-Type']).to.equal('application/json');		
 		
 		var userPayloadObject = JSON.parse(requestConstructorArgs[3]);
-		expect(userPayloadObject.id).to.equal('9886244926Siddharth');		
-		expect(userPayloadObject.name).to.equal('Siddharth B');
+		expect(userPayloadObject.id).to.equal('12345678world');		
+		expect(userPayloadObject.name).to.equal('employee');
 		expect(userPayloadObject.type).to.equal('customer');		
 		expect(userPayloadObject.notification).to.be.false;
 		expect(userPayloadObject.account).to.equal('Inactive');
