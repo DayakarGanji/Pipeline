@@ -23,7 +23,7 @@ pipeline {
         stage('Policy-Code Analysis') {
             steps {
                // bat "npm install -g apigeelint"
-                bat "C:\Windows\System32\config\systemprofile\AppData\Roaming\npm\apigeelint -s HelloWorld/apiproxy/ -f codeframe.js"
+                bat "C:/Windows/System32/config/systemprofile/AppData/Roaming/npm/apigeelint -s HelloWorld/apiproxy/ -f codeframe.js"
             }
         }
         stage('Unit-Test-With-Coverage') {
