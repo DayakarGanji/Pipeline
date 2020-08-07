@@ -1,5 +1,5 @@
 var expect = require('C:/Users/dayakar.g/AppData/Roaming/npm/node_modules/expect.js');
-var sinon = require('sinon');
+var sinon = require('C:/Users/dayakar.g/AppData/Roaming/npm/node_modules/sinon');
 
 // this is the javascript file that is under test
 var jsFile = '../../HelloWorld/apiproxy/resources/jsc/Logging-User-Setting-ID.js';
