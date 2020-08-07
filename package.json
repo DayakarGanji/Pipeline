@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "a demo for running mocha tests",
   "scripts": {
-    "test": "mocha --reporter mocha-xunit-reporter --reporter dot",
+    "test": "--exec \"mocha --reporter mocha-xunit-reporter --reporter\" dot",
     "coverage": "nyc --reporter html --reporter cobertura --reporter text npm test"
   },
   "author": "",
