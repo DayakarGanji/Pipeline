@@ -1,4 +1,4 @@
-var expect = require('expect.js');
+var expect = require('C:/Users/dayakar.g/AppData/Roaming/npm/node_modules/expect.js');
 var sinon = require('sinon');
 
 // this is the javascript file that is under test
