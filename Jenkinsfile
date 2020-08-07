@@ -23,7 +23,7 @@ pipeline {
         stage('Policy-Code Analysis') {
             steps {
                // bat "npm install -g apigeelint"
-                bat "apigeelint -s HelloWorld/apiproxy/ -f codeframe.js"
+                bat "C:\Windows\System32\config\systemprofile\AppData\Roaming\npm\apigeelint -s HelloWorld/apiproxy/ -f codeframe.js"
             }
         }
         stage('Unit-Test-With-Coverage') {
@@ -55,7 +55,7 @@ pipeline {
                  
                  // deploy only proxy and deploy both proxy and 	config based on edge.js update
                 //	bat "sh && sh deploy.sh"
-                bat "mvn -f HelloWorld/pom.xml install -Pprod -Dusername=${apigeeUsername} -Dpassword=${apigeePassword} -Dapigee.config.options=update"
+                bat "mvn -f HelloWorld/pom.xml install -Pprod -Dusername=dayakar.g@hcl.com -Dpassword=Never4gt01! -Dapigee.config.options=update"
             }
         }
         stage('Integration Tests') {
