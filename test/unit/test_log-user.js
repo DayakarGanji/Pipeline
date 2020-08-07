@@ -41,15 +41,15 @@ afterEach(function() {
 describe('feature: user account creation', function() {
 	it('should send inactive account response', function() {
 		contextGetVariableMethod.withArgs('extracted-user-type').returns('customer');
-		contextGetVariableMethod.withArgs('extracted-phone').returns('12345678');
-		contextGetVariableMethod.withArgs('extracted-first-name').returns('hello');
-		contextGetVariableMethod.withArgs('extracted-last-name').returns('world');
+		contextGetVariableMethod.withArgs('extracted-phone').returns('9886244926');
+		contextGetVariableMethod.withArgs('extracted-first-name').returns('Siddharth');
+		contextGetVariableMethod.withArgs('extracted-last-name').returns('B');
 
 
 		var errorThrown = false;
 		try { requireUncached(jsFile);} catch (e) { errorThrown = true; }
 
-		expect(errorThrown).to.equal(true);
+		expect(errorThrown).to.equal(false);
 
 		expect(httpClientSendMethod.calledOnce).to.be.true;
 		expect(requestConstructor.calledOnce).to.be.true;
@@ -60,8 +60,8 @@ describe('feature: user account creation', function() {
 		expect(requestConstructorArgs[2]['Content-Type']).to.equal('application/json');		
 		
 		var userPayloadObject = JSON.parse(requestConstructorArgs[3]);
-		expect(userPayloadObject.id).to.equal('12345678hello');		
-		expect(userPayloadObject.name).to.equal('employee');
+		expect(userPayloadObject.id).to.equal('9886244926Siddharth');		
+		expect(userPayloadObject.name).to.equal('Siddharth B');
 		expect(userPayloadObject.type).to.equal('customer');		
 		expect(userPayloadObject.notification).to.be.false;
 		expect(userPayloadObject.account).to.equal('Inactive');
