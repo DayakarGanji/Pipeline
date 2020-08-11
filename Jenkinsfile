@@ -37,7 +37,7 @@ pipeline {
                         throw e
                     } finally {
                         bat "cd coverage && cp cobertura-coverage.xml $WORKSPACE"
-                        bat([$class: 'CoberturaPublisher', coberturaReportFile: 'cobertura-coverage.xml'])
+                       // bat([$class: 'CoberturaPublisher', coberturaReportFile: 'cobertura-coverage.xml'])
                     }
                 }
             }
