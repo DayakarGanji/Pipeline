@@ -49,7 +49,7 @@ pipeline {
                 }
             }
         }*/
-        stage('Deploy to Production') {
+        stage('Deploy to Test') {
             steps {
                  //deploy using maven plugin
                  
