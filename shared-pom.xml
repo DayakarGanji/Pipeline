@@ -77,8 +77,8 @@
                 <apigee.apiversion>v1</apigee.apiversion>
                 <apigee.org>dayakarg-eval</apigee.org>
                 <apigee.env>test</apigee.env>
-                <apigee.username>${username}</apigee.username>
-                <apigee.password>${password}</apigee.password>
+		<username>${username}</username>
+                <password>${password}</password>
              </properties>
         </profile>
         <profile>
