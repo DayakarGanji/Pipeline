@@ -9,34 +9,34 @@ pipeline {
 
     environment {
         //getting the current stable/deployed revision...this is used in undeloy.sh in case of failure...
-        stable_revision = sh(script: 'curl -H "Authorization: Basic "$BASE64"" "https://api.enterprise.apigee.com/v1/organizations/dayakarg-eval/apis/HelloWorld/deployments" --ssl-no-revoke -x  | jq -r ".environment[0].revision[0].name"', returnStdout: true).trim()
+       // stable_revision = sh(script: 'curl -H "Authorization: Basic "$BASE64"" "https://api.enterprise.apigee.com/v1/organizations/dayakarg-eval/apis/HelloWorld/deployments" --ssl-no-revoke -x  | jq -r ".environment[0].revision[0].name"', returnStdout: true).trim()
     }
 
     stages {
-        stage('Initial-Checks') {
-            steps {
-                bat "npm -v"
-                bat "mvn -v"
+        //stage('Initial-Checks') {
+            //steps {
+                //bat "npm -v"
+                //bat "mvn -v"
                 //echo "$apigeeUsername"
-                echo "Stable Revision: ${env.stable_revision}"
+                //echo "Stable Revision: ${env.stable_revision}"
         }}  
         stage('Policy-Code Analysis') {
-            steps {
+       //     steps {
                // bat "npm install -g apigeelint"
-                bat "C:/Windows/System32/config/systemprofile/AppData/Roaming/npm/apigeelint -s HelloWorld/apiproxy/ -f codeframe.js"
+         //       bat "C:/Windows/System32/config/systemprofile/AppData/Roaming/npm/apigeelint -s HelloWorld/apiproxy/ -f codeframe.js"
             }
         }
         stage('Unit-Test-With-Coverage') {
-            steps {
-                script {
-                    try {
+           // steps {
+             //   script {
+               //     try {
                         // bat "npm install"
-                        bat "npm test test/unit/*.js"
-                        bat "npm run coverage test/unit/*.js"
-                    } catch (e) {
-                        throw e
-                    } finally {
-                        bat "cd coverage && cp cobertura-coverage.xml $WORKSPACE"
+                 //       bat "npm test test/unit/*.js"
+                   //     bat "npm run coverage test/unit/*.js"
+                  //  } catch (e) {
+                    //    throw e
+                   // } finally {
+                     //   bat "cd coverage && cp cobertura-coverage.xml $WORKSPACE"
                        // bat([$class: 'CoberturaPublisher', coberturaReportFile: 'cobertura-coverage.xml'])
                     }
                 }
@@ -49,13 +49,13 @@ pipeline {
                 }
             }
         }*/
-        stage('Deploy to Test') {
+        stage('Deploy to test') {
             steps {
                  //deploy using maven plugin
                  
                  // deploy only proxy and deploy both proxy and 	config based on edge.js update
                 //	bat "sh && sh deploy.sh"
-                sh "mvn -X -f HelloWorld/pom.xml install -Ptest -Dusername=${apigeeUsername} -Dpassword=${apigeePassword} -Dapigee.config.options=update"
+                sh "mvn -f HelloWorld/pom.xml install -Ptest -Dusername=${apigeeUsername} -Dpassword=${apigeePassword} -Dapigee.config.options=update"
                 
             }
         }
