@@ -20,12 +20,12 @@ pipeline {
                 //echo "$apigeeUsername"
                 //echo "Stable Revision: ${env.stable_revision}"
         }}  
-        stage('Policy-Code Analysis') {
+      /*  stage('Policy-Code Analysis') {
             steps {
                // bat "npm install -g apigeelint"
                bat "C:/Windows/System32/config/systemprofile/AppData/Roaming/npm/apigeelint -s HelloWorld/apiproxy/ -f codeframe.js"
             }
-        }
+        }*/
         stage('Unit-Test-With-Coverage') {
             steps {
               script {
@@ -48,7 +48,7 @@ pipeline {
                     input 'Do you want to Approve?'
                 }
             }
-        }*/
+        }
         stage('Deploy to test') {
             steps {
                  //deploy using maven plugin
@@ -58,7 +58,7 @@ pipeline {
                 sh "mvn -f HelloWorld/pom.xml install -Ptest -Dusername=${apigeeUsername} -Dpassword=${apigeePassword} -Dapigee.config.options=update"
                 
             }
-        }
+        }*/
         stage('Integration Tests') {
             steps {
                 script {
