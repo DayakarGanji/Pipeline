@@ -48,7 +48,7 @@ pipeline {
                     input 'Do you want to Approve?'
                 }
             }
-        }*/
+        }
         stage('Deploy to Test') {
             steps {
                  //deploy using maven plugin
@@ -57,7 +57,7 @@ pipeline {
                 //	bat "sh && sh deploy.sh"
                 bat "mvn -f HelloWorld/pom.xml install -Pprod -Dusername=${apigeeUsername} -Dpassword=${apigeePassword} -Dapigee.config.options=update"
             }
-        }
+        }*/
         stage('Integration Tests') {
             steps {
                 script {
