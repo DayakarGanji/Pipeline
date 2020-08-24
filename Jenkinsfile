@@ -84,8 +84,7 @@ pipeline {
             }
         }
     }
-    }
-
+   
 /*
 
 using shared library for slack reporting
