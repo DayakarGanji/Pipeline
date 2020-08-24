@@ -17,7 +17,7 @@ pipeline {
        steps {
                 bat "npm -v"
                 bat "mvn -v"
-                //echo "$apigeeUsername"
+                echo "$apigeeUsername"
                 //echo "Stable Revision: ${env.stable_revision}"
         }}  
       /*  stage('Policy-Code Analysis') {
@@ -48,7 +48,7 @@ pipeline {
                     input 'Do you want to Approve?'
                 }
             }
-        }
+        } */
         stage('Deploy to test') {
             steps {
                  //deploy using maven plugin
@@ -58,7 +58,7 @@ pipeline {
                 sh "mvn -f HelloWorld/pom.xml install -Ptest -Dusername=${apigeeUsername} -Dpassword=${apigeePassword} -Dapigee.config.options=update"
                 
             }
-        }*/
+        }
         stage('Integration Tests') {
             steps {
                 script {
