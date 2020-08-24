@@ -9,10 +9,12 @@ pipeline {
 
     environment {
         //getting the current stable/deployed revision...this is used in undeloy.sh in case of failure...
+        apigeePassword = credentials{'apigeePassword'}
+        base64 = credentials{'BASE64'}
         stable_revision = sh(script: 'curl -H "Authorization: Basic "$BASE64"" "https://api.enterprise.apigee.com/v1/organizations/dayakarg-eval/apis/HelloWorld/deployments" --ssl-no-revoke -x  | jq -r ".environment[0].revision[0].name"', returnStdout: true).trim()
     }
 
-    stages {
+  /*  stages {
        stage('Initial-Checks') {
        steps {
                 bat "npm -v"
@@ -20,7 +22,7 @@ pipeline {
                 echo "$apigeeUsername"
                 //echo "Stable Revision: ${env.stable_revision}"
         }}  
-      /*  stage('Policy-Code Analysis') {
+        stage('Policy-Code Analysis') {
             steps {
                // bat "npm install -g apigeelint"
                bat "C:/Windows/System32/config/systemprofile/AppData/Roaming/npm/apigeelint -s HelloWorld/apiproxy/ -f codeframe.js"
