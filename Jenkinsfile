@@ -14,6 +14,9 @@ pipeline {
 
    stages {
        stage('Initial-Checks') {
+           environment {
+               apigeePassword = credentials{'apigeePassword'}
+               {
        steps {
                 bat "npm -v"
                 bat "mvn -v"
