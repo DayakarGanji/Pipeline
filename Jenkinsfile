@@ -14,13 +14,10 @@ pipeline {
 
    stages {
        stage('Initial-Checks') {
-           environment {
-               apigeePassword = "credentials{'apigeePassword'}"
-           }
-       steps {
+            steps {
                 bat "npm -v"
                 bat "mvn -v"
-                echo "$apigeeUsername"
+                echo "$USERNAME"
                 //echo "Stable Revision: ${env.stable_revision}"
         }}  
         stage('Policy-Code Analysis') {
