@@ -58,7 +58,10 @@ pipeline {
                  
                  // deploy only proxy and deploy both proxy and 	config based on edge.js update
                 //	bat "sh && sh deploy.sh"
-                sh "mvn -f HelloWorld/pom.xml install -Ptest -Dusername=${apigeeUsername} -Dpassword=${apigeePassword} -Dapigee.config.options=update"
+                withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: '970fc808-e469-4cf7-9f51-2a5881d43ff4',
+                    usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD']])
+                
+                sh "mvn -f HelloWorld/pom.xml install -Ptest -Dusername=${USERNAME} -Dpassword=${PASSWORD} -Dapigee.config.options=update"
                 
             }
         }
