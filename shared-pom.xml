@@ -77,8 +77,8 @@
                 <apigee.apiversion>v1</apigee.apiversion>
                 <apigee.org>dayakarg-eval</apigee.org>
                 <apigee.env>test</apigee.env>
-                <apigee.username>${username}</apigee.username>
-                <apigee.password>${password}</apigee.password>
+                <apigee.username>${USERNAME}</apigee.username>
+                <apigee.password>${PASSWORD}</apigee.password>
                 <apigee.authtype>basic</apigee.authtype> <!-- optional: oauth|basic(default) -->
                 <apigee.tokenurl>https://login.apigee.com/oauth/token</apigee.tokenurl> <!-- optional: oauth -->
                 <apigee.mfatoken>${mfatoken}</apigee.mfatoken> <!-- optional: mfa -->
@@ -96,8 +96,8 @@
                 <apigee.apiversion>v1</apigee.apiversion>
                 <apigee.org>dayakarg-eval</apigee.org>
                 <apigee.env>prod</apigee.env>
-                <apigee.username>${username}</apigee.username>
-                <apigee.password>${password}</apigee.password>
+                <apigee.username>${USERNAME}</apigee.username>
+                <apigee.password>${PASSWORD}</apigee.password>
                 <apigee.authtype>basic</apigee.authtype> <!-- optional: oauth|basic(default) -->
                 <apigee.tokenurl>https://login.apigee.com/oauth/token</apigee.tokenurl> <!-- optional: oauth -->
                 <apigee.mfatoken>${mfatoken}</apigee.mfatoken> <!-- optional: mfa -->
