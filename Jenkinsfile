@@ -9,7 +9,7 @@ pipeline {
 
     environment {
         //getting the current stable/deployed revision...this is used in undeloy.sh in case of failure...
-        stable_revision = sh(script: 'curl -H "Authorization: Basic "$BASE64"" "https://api.enterprise.apigee.com/v1/organizations/dayakarg-eval/apis/HelloWorld/deployments" --ssl-no-revoke -x  | jq -r ".environment[0].revision[0].name"', returnStdout: true).trim()
+        stable_revision = sh(script: 'curl -H "Authorization: Basic "$BASE64"" "https://api.enterprise.apigee.com/v1/organizations/dayakarg-eval/apis/$proxyname/deployments" --ssl-no-revoke -x  | jq -r ".environment[0].revision[0].name"', returnStdout: true).trim()
     }
 
    stages {
@@ -23,7 +23,7 @@ pipeline {
         stage('Policy-Code Analysis') {
             steps {
                // bat "npm install -g apigeelint"
-               bat "C:/Windows/System32/config/systemprofile/AppData/Roaming/npm/apigeelint -s HelloWorld/apiproxy/ -f codeframe.js"
+               bat "C:/Windows/System32/config/systemprofile/AppData/Roaming/npm/apigeelint -s $proxyname/apiproxy/ -f codeframe.js"
             }
         } 
         stage('Unit-Test-With-Coverage') {
